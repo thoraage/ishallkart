@@ -1,22 +1,83 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <title>Ishaller i Norge</title>
     <style>
+      body, html {
+        height: 100%;
+      }
       #map_canvas {
-        width: 500px;
-        height: 400px;
+        height: 100%;
+        width: 100%;
+	margin: 0;
+	padding: 0;
       }
     </style>
     <script src="https://maps.googleapis.com/maps/api/js"></script>
     <script>
+      var locations = [
+{ name: "Askerhallen", posx: 59.82581, posy: 10.44722 },
+{ name: "Bergenshallen", posx: 60.35404, posy: 5.35960 },
+{ name: "Bærum ishall", posx: 59.90998, posy: 10.50109 },
+{ name: "Dalgård ishall", posx: 63.39404, posy: 10.34584 },
+{ name: "Dnb arena Stavanger", posx: 58.95323, posy: 5.69021 },
+{ name: "Fosenhallen", posx: 63.76329, posy: 9.81306 },
+{ name: "Furuset forum", posx: 59.94043, posy: 10.89706 },
+{ name: "Gjøvik olympiske fjellhall", posx: 60.79340, posy: 10.68493 },
+{ name: "Grünerhallen", posx: 59.92693, posy: 10.76506 },
+{ name: "Halden ishall", posx: 59.13657, posy: 11.40516 },
+{ name: "Hamar OL-amfi", posx: 60.80142, posy: 11.03744 },
+{ name: "Haugesund ishall", posx: 59.42418, posy: 5.27955 },
+{ name: "Holmen ishall", posx: 59.85457, posy: 10.48524 },
+{ name: "Håkons hall", posx: 61.12378, posy: 10.47390 },
+{ name: "Idda arena", posx: 58.14674, posy: 7.97314 },
+{ name: "Iskanten ishall", posx: 60.36345, posy: 5.23389 },
+{ name: "Jar isforum", posx: 59.91746, posy: 10.61896 },
+{ name: "Jessheim ishall", posx: 60.14885, posy: 11.18958 },
+{ name: "Jordal amfi", posx: 59.91119, posy: 10.78411 },
+{ name: "Kongsberghallen", posx: 59.68049, posy: 9.63199 },
+{ name: "Kongsvinger ishall", posx: 60.19502, posy: 11.98943 },
+{ name: "Kristins hall", posx: 61.12321, posy: 10.47124 },
+{ name: "Leangen ishall", posx: 63.42759, posy: 10.46685 },
+{ name: "Lørenhallen", posx: 59.93587, posy: 10.80515 },
+{ name: "Lørenskog ishall", posx: 59.92623, posy: 10.96036 },
+{ name: "Manglerud ishall", posx: 59.89482, posy: 10.82552 },
+{ name: "Ishall i Moss", posx: 59.42585, posy: 10.68002 },
+{ name: "Nye Loen", posx: 58.67052, posy: 5.64048 },
+{ name: "Nordkraft arena", posx: 68.43821, posy: 17.42286 },
+{ name: "Oslo spektrum", posx: 59.91298, posy: 10.75473 },
+{ name: "Runnirinken ishall", posx: 60.128466, posy: 11.476883 },
+{ name: "Schjongshallen", posx: 60.15770, posy: 10.26268 },
+{ name: "Skedsmo ishall", posx: 60.00448, posy: 11.03920 },
+{ name: "Ski ishall", posx: 59.71595, posy: 10.85137 },
+{ name: "Skien fritidspark ishall", posx: 59.18471, posy: 9.59648 },
+{ name: "Sparta amfi", posx: 59.28085, posy: 11.08820 },
+{ name: "Stavanger ishall", posx: 58.95435, posy: 5.69587 },
+{ name: "Stjernehallen", posx: 59.22582, posy: 10.94559 },
+{ name: "Storhamar ishall", posx: 60.80168, posy: 11.03785 },
+{ name: "Tromsø ishall", posx: 69.67670, posy: 18.96153 },
+{ name: "Tønsberg ishall", posx: 59.28206, posy: 10.40944 }
+      ];
       function initialize() {
         var mapCanvas = document.getElementById('map_canvas');
         var mapOptions = {
-          center: new google.maps.LatLng(44.5403, -78.5463),
-          zoom: 8,
+          center: new google.maps.LatLng(65, 13.20506),
+          zoom: 5,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         }
         var map = new google.maps.Map(mapCanvas, mapOptions);
+        for (var i = 0; i < locations.length; i++) {
+	  new google.maps.Circle({
+	     strokeColor: '#0000FF',
+	     strokeOpacity: 0.8,
+	     strokeWeight: 2,
+             fillColor: '#0000FF',
+             fillOpacity: 0.35,
+             map: map,
+             center: new google.maps.LatLng(locations[i].posx, locations[i].posy),
+             radius: 50000
+	  });
+        }
       }
       google.maps.event.addDomListener(window, 'load', initialize);
     </script>
