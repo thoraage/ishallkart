@@ -2,11 +2,15 @@
 <html>
   <head>
     <title>Ishaller i Norge</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <style>
       body, html {
         height: 100%;
+        font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+        font-size: 14px;
       }
       #legend {
+        width: 20%;
         bottom: 20px;
         right: 20px;
         -moz-box-shadow: 0px 5px 5px #888;
@@ -15,8 +19,10 @@
         z-index:900;
         position: absolute;
         background-color: #ffffff;
+        padding: 5px;
       }
       #range {
+        width: 98%;
       }
       #radiusValue {
         text-align: center;
@@ -27,6 +33,9 @@
         margin: 0;
         padding: 0;
         z-index: 1;
+      }
+      .tiny {
+        font-size: 10px;
       }
     </style>
     <script src="https://maps.googleapis.com/maps/api/js"></script>
@@ -75,8 +84,8 @@
         { name: "Tønsberg ishall", posx: 59.28206, posy: 10.40944 }
       ];
       function changeRadius(value) {
-        radius = value * 1000;
-        radiusValue.innerHTML = (radius / 1000).toString() + "km";
+        radius = (value * value / 1000000) * 500 * 1000;
+        radiusValue.innerHTML = (radius / 1000).toFixed(2).toString() + "km";
         for (var i = 0; i < locations.length; i++) {
           locations[i].circle.setRadius(radius);
 	    }
@@ -92,16 +101,22 @@
         }
         var map = new google.maps.Map(mapCanvas, mapOptions);
         for (var i = 0; i < locations.length; i++) {
+          var pos = new google.maps.LatLng(locations[i].posx, locations[i].posy);
 	      locations[i].circle = new google.maps.Circle({
              strokeColor: '#0000FF',
              strokeOpacity: 0.8,
-             strokeWeight: 2,
+             strokeWeight: 0,
              fillColor: '#0000FF',
              fillOpacity: 0.35,
              map: map,
-             center: new google.maps.LatLng(locations[i].posx, locations[i].posy),
+             center: pos,
              radius: 50000
 	      });
+          new google.maps.Marker({
+            position: pos,
+            map: map,
+            title: locations[i].name
+          });
         }
         changeRadius(range.value);
       }
@@ -111,8 +126,13 @@
   <body>
     <div id="map_canvas"></div>
     <div id="legend">
-        <div id="radiusValue">100</div>
-        <input id="range" type="range" min="1" oninput="changeRadius(this.value)" />
+        <p>Markørene viser ishaller i Norge og sirklene rundt viser hvor stort område som når dem.</p>
+        <p>Still på radius under for å se hvor langt unna du bor.</p>
+        <p>Denne visningen ble laget som en reaksjon på påstanden om at Oslo-området er dårligst stilt
+        når det gjelder ishaller. </p>
+        <div id="radiusValue"></div>
+        <input id="range" type="range" min="1" max="1000" oninput="changeRadius(this.value)" value="250"/>
+        <div class="tiny">© 2014 <a href="https://twitter.com/thoraageeldby">@thoraageeldby</a></div>
     </div>
   </body>
 </html>
